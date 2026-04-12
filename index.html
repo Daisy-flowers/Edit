@@ -305,32 +305,37 @@ let editingId = null;
 // ════════════════════════════════════════════════
 const WORKER_URL      = 'https://weathered-waterfall-98de.t8169105.workers.dev/save';
 const WORKER_PASSWORD = 'daisy123';
+const WORKER_UPLOAD   = 'https://weathered-waterfall-98de.t8169105.workers.dev/upload';
 
-function getGHConfig() { return {}; } // kept for compat, unused
+function getGHConfig() { return {}; }
+
+let useLocalCache = false; // true right after a save so we don't re-fetch stale GitHub data
 
 async function loadData() {
-  const { token, repo, branch, path } = getGHConfig();
-  if (repo) {
-    try {
-      const r = await fetch(`https://raw.githubusercontent.com/${repo}/${branch}/${path}?t=${Date.now()}`);
-      if (r.ok) {
-        PRODUCTS = await r.json();
-        localStorage.setItem('daisy_products', JSON.stringify(PRODUCTS));
-      } else {
-        PRODUCTS = JSON.parse(localStorage.getItem('daisy_products') || 'null') || DEFAULT_PRODUCTS;
-      }
-    } catch(e) {
+  if (useLocalCache) {
+    useLocalCache = false;
+    PRODUCTS = JSON.parse(localStorage.getItem('daisy_products') || 'null') || DEFAULT_PRODUCTS;
+    orders   = JSON.parse(localStorage.getItem('daisy_orders')   || '[]');
+    return;
+  }
+  const repo = 'Daisy-flowers/Daisy';
+  try {
+    const r = await fetch(`https://raw.githubusercontent.com/${repo}/main/data/products.json?t=${Date.now()}`);
+    if (r.ok) {
+      PRODUCTS = await r.json();
+      localStorage.setItem('daisy_products', JSON.stringify(PRODUCTS));
+    } else {
       PRODUCTS = JSON.parse(localStorage.getItem('daisy_products') || 'null') || DEFAULT_PRODUCTS;
     }
-  } else {
+  } catch(e) {
     PRODUCTS = JSON.parse(localStorage.getItem('daisy_products') || 'null') || DEFAULT_PRODUCTS;
   }
   orders = JSON.parse(localStorage.getItem('daisy_orders') || '[]');
 }
 
 async function saveProducts() {
-  // Always cache locally first
   localStorage.setItem('daisy_products', JSON.stringify(PRODUCTS));
+  useLocalCache = true; // don't overwrite with stale GitHub data on next section load
 
   if (WORKER_URL.includes('YOUR_WORKER')) {
     toast('Saved locally — set WORKER_URL in admin.html to sync online.');
@@ -648,17 +653,21 @@ function openModal(id) {
 
       <!-- IMAGE -->
       <div class="fg">
-        <label>Bouquet Image (URL)</label>
+        <label>Bouquet Image</label>
         <div class="img-preview-row">
           <div class="img-prev-box" id="imgBox">
-            ${p && p.imageUrl ? `<img src="${p.imageUrl}" id="imgBoxImg" style="width:100%;height:100%;object-fit:cover;">` : `<span id="imgBoxEmoji" style="font-size:2rem;">${v('emoji','🌸')}</span>`}
+            ${p && p.imageUrl ? `<img src="${p.imageUrl}" style="width:100%;height:100%;object-fit:cover;">` : `<span style="font-size:2rem;">${v('emoji','🌸')}</span>`}
           </div>
-          <div style="font-size:0.73rem;color:var(--text-dim);line-height:1.6;">
-            Paste any direct image link<br>(Cloudinary, Unsplash, Google Drive public link).<br>
-            Leave empty to show the emoji instead.
+          <div style="display:flex;flex-direction:column;gap:0.5rem;">
+            <label style="display:inline-flex;align-items:center;gap:0.4rem;background:var(--rose-dim);color:var(--rose);border:none;padding:0.4rem 0.8rem;border-radius:6px;font-size:0.75rem;font-weight:600;cursor:pointer;">
+              📷 Upload from device
+              <input type="file" accept="image/*" id="fImageFile" style="display:none;" onchange="handleImageUpload(this)">
+            </label>
+            <div style="font-size:0.68rem;color:var(--text-faint);">or paste a URL below</div>
           </div>
         </div>
-        <input class="fi" id="fImageUrl" type="url" placeholder="https://..." value="${v('imageUrl')}" oninput="previewImg(this.value)">
+        <input class="fi" id="fImageUrl" type="url" placeholder="https://... (optional)" value="${v('imageUrl')}" oninput="previewImg(this.value)">
+        <small id="uploadStatus" style="color:var(--green);display:none;">✓ Image uploaded</small>
       </div>
 
       <!-- NAME + EMOJI -->
@@ -747,6 +756,51 @@ function updateEmojiBox(emoji) {
   if (!url) {
     const box = document.getElementById('imgBox');
     if (box) box.innerHTML = `<span style="font-size:2rem;">${emoji}</span>`;
+  }
+}
+
+async function handleImageUpload(input) {
+  const file = input.files[0];
+  if (!file) return;
+
+  // Show preview immediately
+  const reader = new FileReader();
+  reader.onload = e => {
+    const box = document.getElementById('imgBox');
+    if (box) box.innerHTML = `<img src="${e.target.result}" style="width:100%;height:100%;object-fit:cover;">`;
+  };
+  reader.readAsDataURL(file);
+
+  // Upload to GitHub via worker
+  const status = document.getElementById('uploadStatus');
+  toast('Uploading image…');
+
+  try {
+    const base64 = await new Promise((res, rej) => {
+      const r = new FileReader();
+      r.onload = () => res(r.result.split(',')[1]);
+      r.onerror = rej;
+      r.readAsDataURL(file);
+    });
+
+    const filename = `${Date.now()}_${file.name.replace(/[^a-zA-Z0-9._-]/g,'_')}`;
+
+    const resp = await fetch(WORKER_UPLOAD, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ password: WORKER_PASSWORD, filename, imageBase64: base64 }),
+    });
+
+    const result = await resp.json();
+    if (result.ok) {
+      document.getElementById('fImageUrl').value = result.url;
+      if (status) { status.style.display = 'block'; }
+      toast('Image uploaded ✓');
+    } else {
+      toast(`Upload failed: ${result.error}`, true);
+    }
+  } catch(e) {
+    toast('Upload failed — try a URL instead', true);
   }
 }
 
