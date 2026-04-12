@@ -33,7 +33,7 @@
     html, body { height: 100%; }
     body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); display: flex; height: 100vh; overflow: hidden; }
 
-    /* ── LOGIN PAGE ─────────────────────────────── */
+    /* LOGIN */
     #loginPage { position: fixed; inset: 0; z-index: 9999; background: var(--bg); display: flex; align-items: center; justify-content: center; }
     .login-box { background: var(--card); border: 1px solid var(--border); border-radius: 20px; padding: 2.5rem; width: 380px; box-shadow: 0 24px 80px rgba(0,0,0,0.6); animation: fadeUp 0.4s ease both; }
     .login-logo { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; color: var(--rose); margin-bottom: 0.3rem; }
@@ -45,7 +45,7 @@
     .login-btn:hover { background: #a3415a; transform: translateY(-1px); }
     .login-err { color: var(--red); font-size: 0.78rem; margin-top: 0.75rem; text-align: center; min-height: 1.1rem; }
 
-    /* ── SIDEBAR ────────────────────────────────── */
+    /* SIDEBAR */
     #sidebar { width: 240px; flex-shrink: 0; background: var(--sidebar); border-right: 1px solid var(--border); display: flex; flex-direction: column; height: 100vh; overflow-y: auto; }
     .sb-logo { padding: 1.5rem 1.4rem 1rem; font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; color: var(--rose); display: flex; align-items: center; gap: 0.5rem; border-bottom: 1px solid var(--border); }
     .sb-section { padding: 1.2rem 0.75rem 0.4rem; font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; color: var(--text-faint); }
@@ -60,15 +60,17 @@
     .logout-btn { display: flex; align-items: center; gap: 0.6rem; width: 100%; background: none; border: none; color: var(--text-dim); font-family: 'Inter', sans-serif; font-size: 0.78rem; cursor: pointer; padding: 0.5rem 0; transition: color 0.2s; margin-top: 0.5rem; }
     .logout-btn:hover { color: var(--red); }
 
-    /* ── MAIN AREA ──────────────────────────────── */
+    /* MAIN AREA */
     #main { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
     #topbar { padding: 1rem 1.75rem; background: var(--sidebar); border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; }
     .topbar-title { font-size: 1.05rem; font-weight: 600; color: var(--text); }
     .topbar-sub   { font-size: 0.75rem; color: var(--text-dim); margin-top: 0.1rem; }
     .topbar-actions { display: flex; gap: 0.6rem; align-items: center; }
+
+    /* CONTENT */
     #content { flex: 1; overflow-y: auto; padding: 1.75rem; }
 
-    /* ── STATS GRID ─────────────────────────────── */
+    /* STATS GRID */
     .stats-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(170px,1fr)); gap: 1rem; margin-bottom: 1.75rem; }
     .stat-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--r); padding: 1.25rem; }
     .stat-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.75rem; }
@@ -77,12 +79,12 @@
     .stat-val { font-size: 1.75rem; font-weight: 700; color: var(--text); line-height: 1; }
     .stat-label { font-size: 0.73rem; color: var(--text-dim); margin-top: 0.25rem; }
 
-    /* ── SECTION HEADER ─────────────────────────── */
+    /* SECTION HEADER */
     .sec-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; }
     .sec-title { font-size: 0.95rem; font-weight: 600; color: var(--text); }
     .sec-sub   { font-size: 0.73rem; color: var(--text-dim); margin-top: 0.1rem; }
 
-    /* ── TABLE ──────────────────────────────────── */
+    /* TABLE */
     .tbl-wrap { background: var(--card); border: 1px solid var(--border); border-radius: var(--r); overflow: hidden; }
     .tbl-scroll { overflow-x: auto; }
     table { width: 100%; border-collapse: collapse; }
@@ -91,39 +93,42 @@
     tbody tr:last-child td { border-bottom: none; }
     tbody tr:hover td { background: rgba(255,255,255,0.02); }
 
-    /* ── PRODUCT CARD THUMB ─────────────────────── */
+    /* PRODUCT THUMB */
     .p-thumb { width: 46px; height: 46px; border-radius: 10px; background: rgba(255,255,255,0.06); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; overflow: hidden; flex-shrink: 0; }
     .p-thumb img { width: 100%; height: 100%; object-fit: cover; }
     .p-name-cell { display: flex; align-items: center; gap: 0.75rem; }
     .p-name { font-weight: 600; font-size: 0.87rem; color: var(--text); }
     .p-cat  { font-size: 0.72rem; color: var(--text-dim); margin-top: 0.1rem; text-transform: capitalize; }
 
-    /* ── BADGES ─────────────────────────────────── */
+    /* BADGES */
     .chip { display: inline-flex; align-items: center; gap: 0.3rem; padding: 0.22rem 0.65rem; border-radius: 50px; font-size: 0.68rem; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; }
-    .chip-green  { background: var(--green-dim);  color: var(--green); }
-    .chip-amber  { background: var(--amber-dim);  color: var(--amber); }
-    .chip-red    { background: var(--red-dim);    color: var(--red); }
-    .chip-blue   { background: var(--blue-dim);   color: var(--blue); }
-    .chip-rose   { background: var(--rose-dim);   color: var(--rose); }
-    .chip-gray   { background: rgba(255,255,255,0.07); color: var(--text-dim); }
+    .chip-green { background: var(--green-dim);  color: var(--green); }
+    .chip-amber { background: var(--amber-dim);  color: var(--amber); }
+    .chip-red   { background: var(--red-dim);    color: var(--red); }
+    .chip-blue  { background: var(--blue-dim);   color: var(--blue); }
+    .chip-rose  { background: var(--rose-dim);   color: var(--rose); }
+    .chip-gray  { background: rgba(255,255,255,0.07); color: var(--text-dim); }
 
-    /* ── BUTTONS ────────────────────────────────── */
-    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 0.4rem; padding: 0.55rem 1.1rem; border-radius: var(--r-sm); font-family: 'Inter', sans-serif; font-size: 0.82rem; font-weight: 600; cursor: pointer; transition: all 0.2s; border: none; white-space: nowrap; }
+    /* BUTTONS */
+    .btn { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.55rem 1.1rem; border-radius: var(--r-sm); font-family: 'Inter', sans-serif; font-size: 0.82rem; font-weight: 600; cursor: pointer; transition: all 0.2s; border: none; white-space: nowrap; }
     .btn-rose   { background: var(--rose);  color: #fff; }
     .btn-rose:hover { background: #a3415a; }
     .btn-ghost  { background: rgba(255,255,255,0.06); color: var(--text-dim); }
     .btn-ghost:hover { background: rgba(255,255,255,0.1); color: var(--text); }
     .btn-danger { background: var(--red-dim); color: var(--red); }
     .btn-danger:hover { background: var(--red); color: #fff; }
+    .btn-green  { background: var(--green-dim); color: var(--green); }
+    .btn-green:hover { background: var(--green); color: #fff; }
     .btn-sm { padding: 0.32rem 0.75rem; font-size: 0.75rem; border-radius: 6px; }
 
+    /* STATUS SELECT */
     .status-select { background: var(--bg); border: 1px solid var(--border); border-radius: 6px; color: var(--text); padding: 0.28rem 0.55rem; font-size: 0.76rem; cursor: pointer; font-family: 'Inter', sans-serif; }
 
-    /* ── MODAL ──────────────────────────────────── */
+    /* MODAL */
     .overlay { position: fixed; inset: 0; z-index: 8000; background: rgba(0,0,0,0.65); backdrop-filter: blur(4px); display: flex; align-items: center; justify-content: center; padding: 1rem; animation: fadeIn 0.2s ease; }
     @keyframes fadeIn { from{opacity:0}to{opacity:1} }
     @keyframes fadeUp { from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)} }
-    .modal { background: var(--card); border: 1px solid var(--border); border-radius: 18px; width: 100%; max-width: 660px; max-height: 92vh; overflow-y: auto; animation: fadeUp 0.25s ease; }
+    .modal { background: var(--card); border: 1px solid var(--border); border-radius: 18px; width: 100%; max-width: 600px; max-height: 92vh; overflow-y: auto; animation: fadeUp 0.25s ease; }
     .modal-hd { display: flex; justify-content: space-between; align-items: center; padding: 1.5rem 1.75rem 0; }
     .modal-ttl { font-size: 1.05rem; font-weight: 700; color: var(--text); }
     .modal-sub { font-size: 0.74rem; color: var(--text-dim); margin-top: 0.2rem; }
@@ -132,19 +137,24 @@
     .modal-body { padding: 1.5rem 1.75rem; }
     .modal-ft { padding: 1rem 1.75rem 1.5rem; border-top: 1px solid var(--border); display: flex; gap: 0.75rem; justify-content: flex-end; }
 
-    /* FORM FIELDS */
+    /* FORM */
     .fg { margin-bottom: 1rem; }
     .fg label { display: block; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.09em; color: var(--text-dim); margin-bottom: 0.35rem; }
     .fi { width: 100%; padding: 0.7rem 0.9rem; background: var(--bg); border: 1px solid var(--border); border-radius: var(--r-sm); color: var(--text); font-family: 'Inter', sans-serif; font-size: 0.88rem; outline: none; transition: border-color 0.2s; }
     .fi:focus { border-color: var(--rose); }
-    .fi-sm { max-width: 180px; }
+    .fi-sm { max-width: 200px; }
     textarea.fi { resize: vertical; min-height: 80px; }
     .fg small { font-size: 0.7rem; color: var(--text-faint); margin-top: 0.3rem; display: block; }
     .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-    
+
+    /* IMG PREVIEW */
     .img-preview-row { display: flex; align-items: center; gap: 1rem; margin-bottom: 0.6rem; }
     .img-prev-box { width: 64px; height: 64px; border-radius: 12px; background: rgba(255,255,255,0.05); border: 2px dashed var(--border); display: flex; align-items: center; justify-content: center; font-size: 2rem; overflow: hidden; flex-shrink: 0; }
     .img-prev-box img { width: 100%; height: 100%; object-fit: cover; }
+
+    /* SETTINGS FORM */
+    .settings-section { background: var(--card); border: 1px solid var(--border); border-radius: var(--r); padding: 1.5rem; margin-bottom: 1.25rem; }
+    .settings-title { font-size: 0.88rem; font-weight: 700; color: var(--text); margin-bottom: 1rem; padding-bottom: 0.75rem; border-bottom: 1px solid var(--border); }
 
     /* TOAST */
     #toastEl { position: fixed; bottom: 1.5rem; left: 50%; transform: translateX(-50%); background: var(--green); color: #fff; padding: 0.65rem 1.4rem; border-radius: 50px; font-size: 0.84rem; font-weight: 600; z-index: 9999; display: none; animation: fadeUp 0.3s ease; white-space: nowrap; box-shadow: 0 4px 20px rgba(62,207,142,0.3); }
@@ -154,8 +164,9 @@
     .empty-state { text-align: center; padding: 4rem 2rem; color: var(--text-dim); }
     .empty-state .ei { font-size: 3rem; margin-bottom: 0.75rem; }
     .empty-state h3 { font-size: 1rem; color: var(--text); margin-bottom: 0.4rem; }
-    .empty-state p  { font-size: 0.82rem; margin-bottom: 1.5rem; }
+    .empty-state p  { font-size: 0.82rem; }
 
+    /* SCROLLBAR */
     ::-webkit-scrollbar { width: 5px; height: 5px; }
     ::-webkit-scrollbar-track { background: transparent; }
     ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 99px; }
@@ -168,6 +179,7 @@
 </head>
 <body>
 
+<!-- LOGIN -->
 <div id="loginPage">
   <div class="login-box">
     <div class="login-logo">🌸 Daisy Admin</div>
@@ -181,16 +193,19 @@
   </div>
 </div>
 
+<!-- APP (hidden until login) -->
+<!-- Fixed: removed duplicate display:none -->
 <div id="appShell" style="display:none;width:100%;overflow:hidden;">
+
   <!-- SIDEBAR -->
   <div id="sidebar">
     <div class="sb-logo">🌸 Daisy</div>
     <div class="sb-section">Main</div>
-    <button class="sb-link active" id="nav-dashboard" onclick="navigateSection('dashboard')"><span class="icon">📊</span> Dashboard</button>
-    <button class="sb-link" id="nav-products" onclick="navigateSection('products')"><span class="icon">🌸</span> Products</button>
-    <button class="sb-link" id="nav-orders" onclick="navigateSection('orders')"><span class="icon">📦</span> Orders <span class="sb-badge" id="pendingBadge">0</span></button>
-    <button class="sb-link" id="nav-settings" onclick="navigateSection('settings')"><span class="icon">⚙️</span> Settings</button>
-    
+    <button class="sb-link active" id="nav-dashboard" onclick="showSection('dashboard')"><span class="icon">📊</span> Dashboard</button>
+    <button class="sb-link" id="nav-products"  onclick="showSection('products')"><span class="icon">🌸</span> Bouquets</button>
+    <button class="sb-link" id="nav-orders"    onclick="showSection('orders')"><span class="icon">📦</span> Orders <span class="sb-badge" id="pendingBadge">0</span></button>
+    <div class="sb-section">Config</div>
+    <button class="sb-link" id="nav-settings"  onclick="showSection('settings')"><span class="icon">⚙️</span> Settings</button>
     <div class="sb-footer">
       <a class="sb-store-link" href="index.html" target="_blank">🔗 View Store →</a>
       <button class="logout-btn" onclick="doLogout()">🚪 Logout</button>
@@ -205,122 +220,112 @@
         <div class="topbar-sub" id="topbarSub">Welcome back, admin</div>
       </div>
       <div class="topbar-actions">
-        <button class="btn btn-rose" onclick="openModal(null)" id="topbarBtn" style="display:none;">+ Add Bouquet</button>
+        <button class="btn btn-rose" id="topbarBtn" style="display:none;" onclick="openModal(null)">+ Add Bouquet</button>
       </div>
     </div>
     <div id="content"></div>
   </div>
 </div>
 
+<!-- TOAST -->
 <div id="toastEl"></div>
 
 <script>
-const PASS_HASH = 'daisy2024_placeholder'; 
-const ADMIN_USER = 'admin';
-const ADMIN_PASS_PLAIN = 'daisy2024'; 
-
-async function hashStr(str) {
-  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
-  return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
-}
-
-// ── STATE ────────────────────────────────────
-let PRODUCTS =[]; // Starts empty so you can add your own
-let SETTINGS = { esewaNumber: '', deliveryFee: 100 };
-let orders   = JSON.parse(localStorage.getItem('daisy_orders') || '[]');
-let section  = 'dashboard';
-let editingId = null;
+// ════════════════════════════════════════════════
+//  CONFIG — Change password here
+// ════════════════════════════════════════════════
+const ADMIN_USER       = 'admin';
+const ADMIN_PASS_PLAIN = 'daisy2024'; // ⚠️ Change this!
 
 const WORKER_URL      = 'https://weathered-waterfall-98de.t8169105.workers.dev/save';
 const WORKER_PASSWORD = 'daisy123';
 const WORKER_UPLOAD   = 'https://weathered-waterfall-98de.t8169105.workers.dev/upload';
 
+// ════════════════════════════════════════════════
+//  DATA — Empty defaults (admin adds real products)
+// ════════════════════════════════════════════════
+const DEFAULT_PRODUCTS = [];
+
+let PRODUCTS = [];
+let orders   = JSON.parse(localStorage.getItem('daisy_orders') || '[]');
+let section  = 'dashboard';
+let editingId = null;
 let useLocalCache = false;
 
-// Back button history setup
-window.addEventListener('popstate', (e) => {
-  const s = e.state ? e.state.section : 'dashboard';
-  showSection(s, false); 
-});
-
+// ── LOAD / SAVE ────────────────────────────────
 async function loadData() {
   if (useLocalCache) {
     useLocalCache = false;
-    let localData = JSON.parse(localStorage.getItem('daisy_data') || 'null');
-    if (localData) {
-      PRODUCTS = localData.products ||[];
-      SETTINGS = localData.settings || SETTINGS;
-    }
-    orders = JSON.parse(localStorage.getItem('daisy_orders') || '[]');
+    PRODUCTS = JSON.parse(localStorage.getItem('daisy_products') || '[]');
+    orders   = JSON.parse(localStorage.getItem('daisy_orders')   || '[]');
     return;
   }
-  
-  const repo = 'Daisy-flowers/Daisy';
   try {
-    const r = await fetch(`https://raw.githubusercontent.com/${repo}/main/data/products.json?t=${Date.now()}`);
+    const r = await fetch(`https://raw.githubusercontent.com/Daisy-flowers/Daisy/main/data/products.json?t=${Date.now()}`);
     if (r.ok) {
-      const data = await r.json();
-      if (Array.isArray(data)) {
-        PRODUCTS = data;
-      } else {
-        PRODUCTS = data.products ||[];
-        SETTINGS = data.settings || SETTINGS;
-      }
-      localStorage.setItem('daisy_data', JSON.stringify({ products: PRODUCTS, settings: SETTINGS }));
+      PRODUCTS = await r.json();
+      localStorage.setItem('daisy_products', JSON.stringify(PRODUCTS));
     } else {
-      let localData = JSON.parse(localStorage.getItem('daisy_data') || 'null');
-      if(localData){ PRODUCTS = localData.products ||[]; SETTINGS = localData.settings || SETTINGS; }
+      PRODUCTS = JSON.parse(localStorage.getItem('daisy_products') || '[]');
     }
   } catch(e) {
-    let localData = JSON.parse(localStorage.getItem('daisy_data') || 'null');
-    if(localData){ PRODUCTS = localData.products ||[]; SETTINGS = localData.settings || SETTINGS; }
+    PRODUCTS = JSON.parse(localStorage.getItem('daisy_products') || '[]');
   }
   orders = JSON.parse(localStorage.getItem('daisy_orders') || '[]');
 }
 
-async function saveAllData() {
-  const payload = { products: PRODUCTS, settings: SETTINGS };
-  localStorage.setItem('daisy_data', JSON.stringify(payload));
-  useLocalCache = true; 
-
-  if (WORKER_URL.includes('YOUR_WORKER')) {
-    toast('Saved locally — set WORKER_URL in admin.html to sync online.');
-    return;
-  }
-
-  toast('Syncing…');
+async function saveProducts() {
+  localStorage.setItem('daisy_products', JSON.stringify(PRODUCTS));
+  useLocalCache = true;
+  toast('Syncing to GitHub…');
   try {
     const resp = await fetch(WORKER_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ password: WORKER_PASSWORD, ...payload }),
+      body: JSON.stringify({ password: WORKER_PASSWORD, products: PRODUCTS }),
     });
     const result = await resp.json();
     if (result.ok) {
       toast('Synced to GitHub ✓ — site updates in ~30s');
     } else {
-      toast(`Error: ${result.error}`, true);
+      toast(`Sync error: ${result.error}`, true);
     }
   } catch (e) {
-    toast('Worker unreachable — saved locally only', true);
+    toast('Saved locally — GitHub sync failed (check worker)', true);
   }
 }
 
 function saveOrders() { localStorage.setItem('daisy_orders', JSON.stringify(orders)); }
 
+function loadSettings() {
+  try { return JSON.parse(localStorage.getItem('daisy_settings') || '{}'); } catch { return {}; }
+}
+
+async function saveSettings() {
+  const esewaPhone    = document.getElementById('sEsewaPhone').value.trim();
+  const deliveryFee   = parseInt(document.getElementById('sDeliveryFee').value) || 100;
+  const freeDeliveryAt= parseInt(document.getElementById('sFreeAt').value)      || 1500;
+  const settings = { esewaPhone, deliveryFee, freeDeliveryAt };
+  localStorage.setItem('daisy_settings', JSON.stringify(settings));
+  toast('Settings saved ✓');
+}
+
+// ── LOGIN ────────────────────────────────────
 async function doLogin() {
   const u = document.getElementById('lu').value.trim();
   const p = document.getElementById('lp').value;
-  const h = await hashStr(p);
-  const ok = (u === ADMIN_USER) && (p === ADMIN_PASS_PLAIN || h === PASS_HASH);
-  if (ok) {
+  if (u === ADMIN_USER && p === ADMIN_PASS_PLAIN) {
     document.getElementById('loginPage').style.display = 'none';
-    document.getElementById('appShell').style.display = 'flex';
-    navigateSection('dashboard');
+    const shell = document.getElementById('appShell');
+    shell.style.display = 'flex';
+    // Set initial history state so back goes between sections, not out of admin
+    history.replaceState({ section: 'dashboard' }, '', '#dashboard');
+    await showSection('dashboard');
   } else {
     document.getElementById('loginErr').textContent = 'Incorrect username or password.';
   }
 }
+
 function doLogout() {
   document.getElementById('appShell').style.display = 'none';
   document.getElementById('loginPage').style.display = 'flex';
@@ -328,13 +333,24 @@ function doLogout() {
   document.getElementById('lp').value = '';
 }
 
-function navigateSection(s) {
-  history.pushState({ section: s }, '', '?s=' + s);
-  showSection(s, true);
-}
+// ── HISTORY (back button fix) ────────────────
+window.addEventListener('popstate', e => {
+  if (document.getElementById('appShell').style.display !== 'none') {
+    // Admin is logged in — handle back as section navigation
+    const s = (e.state && e.state.section) ? e.state.section : 'dashboard';
+    showSection(s, true);
+  }
+  // If not logged in, let browser handle normally (go back to previous page)
+});
 
-async function showSection(s, pushHistory = true) {
+// ── NAVIGATION ───────────────────────────────
+async function showSection(s, fromPop=false) {
   section = s;
+
+  if (!fromPop) {
+    history.pushState({ section: s }, '', '#' + s);
+  }
+
   const c = document.getElementById('content');
   c.innerHTML = `<div style="color:var(--text-dim);padding:2rem;font-size:0.85rem;">Loading…</div>`;
   await loadData();
@@ -343,36 +359,39 @@ async function showSection(s, pushHistory = true) {
   const active = document.getElementById('nav-' + s);
   if (active) active.classList.add('active');
 
-  const titles = { dashboard:'Dashboard', products:'Products', orders:'Orders', settings:'Settings' };
-  const subs   = { dashboard:'Overview of your store', products:'Manage your knitted bouquets', orders:'Customer orders', settings:'Payment & Delivery Settings' };
+  const titles = { dashboard:'Dashboard', products:'Bouquets', orders:'Orders', settings:'Settings' };
+  const subs   = { dashboard:'Store overview', products:'Manage your knitted bouquet catalogue', orders:'Customer orders', settings:'Payment & delivery settings' };
   document.getElementById('topbarTitle').textContent = titles[s] || s;
   document.getElementById('topbarSub').textContent   = subs[s]  || '';
+
   const tb = document.getElementById('topbarBtn');
-  
-  if (s === 'products') { tb.style.display='inline-flex'; tb.onclick=()=>openModal(null); } else { tb.style.display='none'; }
+  if (s === 'products') { tb.style.display='inline-flex'; } else { tb.style.display='none'; }
 
   const pending = orders.filter(o=>o.status==='Processing').length;
   document.getElementById('pendingBadge').textContent = pending;
 
-  if (s === 'dashboard') c.innerHTML = renderDashboard();
-  else if (s === 'products') c.innerHTML = renderProducts();
-  else if (s === 'orders') c.innerHTML = renderOrders();
-  else if (s === 'settings') c.innerHTML = renderSettings();
+  if      (s === 'dashboard') c.innerHTML = renderDashboard();
+  else if (s === 'products')  c.innerHTML = renderProducts();
+  else if (s === 'orders')    c.innerHTML = renderOrders();
+  else if (s === 'settings')  c.innerHTML = renderSettings();
 }
 
+// ════════════════════════════════════════════════
+//  DASHBOARD
+// ════════════════════════════════════════════════
 function renderDashboard() {
-  const totalRev = orders.filter(o=>o.status==='Delivered').reduce((s,o)=>s+o.total,0);
-  const oos = PRODUCTS.filter(p=>Number(p.stock)<=0).length;
-  const lowStock = PRODUCTS.filter(p=>Number(p.stock)>0&&Number(p.stock)<=5).length;
-  const processing = orders.filter(o=>o.status==='Processing').length;
-  const recent = orders.slice(0,5);
+  const totalRev    = orders.filter(o=>o.status==='Delivered').reduce((s,o)=>s+o.total,0);
+  const oos         = PRODUCTS.filter(p=>Number(p.stock)<=0).length;
+  const lowStock    = PRODUCTS.filter(p=>Number(p.stock)>0&&Number(p.stock)<=5).length;
+  const processing  = orders.filter(o=>o.status==='Processing').length;
+  const recent      = orders.slice(0,5);
 
   return `
   <div class="stats-grid">
     <div class="stat-card">
       <div class="stat-top"><div class="stat-icon" style="background:var(--rose-dim);color:var(--rose);">💰</div><div class="stat-trend chip chip-green">Revenue</div></div>
       <div class="stat-val">Rs. ${totalRev.toLocaleString()}</div>
-      <div class="stat-label">Total from delivered orders</div>
+      <div class="stat-label">From delivered orders</div>
     </div>
     <div class="stat-card">
       <div class="stat-top"><div class="stat-icon" style="background:var(--amber-dim);color:var(--amber);">⏳</div><div class="stat-trend chip chip-amber">Pending</div></div>
@@ -391,65 +410,101 @@ function renderDashboard() {
     </div>
   </div>
 
-  ${(oos>0||lowStock>0) && PRODUCTS.length > 0 ?`
+  ${oos>0||lowStock>0?`
   <div style="background:var(--amber-dim);border:1px solid rgba(245,158,11,0.25);border-radius:var(--r);padding:1rem 1.25rem;margin-bottom:1.75rem;display:flex;align-items:center;gap:0.75rem;">
     <span style="font-size:1.3rem;">⚠️</span>
     <div>
       <div style="font-size:0.85rem;font-weight:600;color:var(--amber);">Stock Alert</div>
-      <div style="font-size:0.77rem;color:var(--text-dim);margin-top:0.2rem;">${oos>0?`<strong style="color:var(--red);">${oos} bouquet(s) out of stock</strong>. `:''}${lowStock>0?`${lowStock} bouquet(s) running low.`:''} <span style="cursor:pointer;text-decoration:underline;color:var(--amber);" onclick="navigateSection('products')">Manage stock →</span></div>
+      <div style="font-size:0.77rem;color:var(--text-dim);margin-top:0.2rem;">${oos>0?`<strong style="color:var(--red);">${oos} out of stock</strong>. `:''}${lowStock>0?`${lowStock} running low.`:''} <span style="cursor:pointer;text-decoration:underline;color:var(--amber);" onclick="showSection('products')">Update stock →</span></div>
     </div>
   </div>`:''}
 
   <div class="sec-header">
-    <div><div class="sec-title">Recent Orders</div><div class="sec-sub">Last ${recent.length} orders placed</div></div>
-    <button class="btn btn-ghost btn-sm" onclick="navigateSection('orders')">View all →</button>
+    <div><div class="sec-title">Recent Orders</div><div class="sec-sub">Last ${recent.length} orders</div></div>
+    <button class="btn btn-ghost btn-sm" onclick="showSection('orders')">View all →</button>
   </div>
-  ${recent.length===0?`<div class="empty-state"><div class="ei">📦</div><h3>No orders yet</h3><p>Orders will appear here once customers check out.</p></div>`:
-  `<div class="tbl-wrap"><div class="tbl-scroll"><table>
-    <thead><tr><th>Order ID</th><th>Customer</th><th>Total</th><th>Date</th><th>Status</th></tr></thead>
-    <tbody>${recent.map(o=>`<tr>
-      <td><code style="font-size:0.75rem;color:var(--rose)">${o.id}</code></td>
-      <td><div style="font-weight:600;">${o.name}</div><div style="font-size:0.72rem;color:var(--text-dim);">${o.phone}</div></td>
-      <td style="font-weight:700;color:var(--rose)">Rs. ${o.total.toLocaleString()}</td>
-      <td style="color:var(--text-dim);font-size:0.8rem;">${o.date}</td>
-      <td>${statusChip(o.status)}</td>
-    </tr>`).join('')}</tbody>
-  </table></div></div>`}`;
+  ${recent.length===0
+    ? `<div class="empty-state"><div class="ei">📦</div><h3>No orders yet</h3><p>Orders appear here once customers check out.</p></div>`
+    : `<div class="tbl-wrap"><div class="tbl-scroll"><table>
+        <thead><tr><th>Order ID</th><th>Customer</th><th>Total</th><th>Date</th><th>Status</th></tr></thead>
+        <tbody>${recent.map(o=>`<tr>
+          <td><code style="font-size:0.75rem;color:var(--rose)">${o.id}</code></td>
+          <td><div style="font-weight:600;">${o.name}</div><div style="font-size:0.72rem;color:var(--text-dim);">${o.phone}</div></td>
+          <td style="font-weight:700;color:var(--rose)">Rs. ${o.total.toLocaleString()}</td>
+          <td style="color:var(--text-dim);font-size:0.8rem;">${o.date}</td>
+          <td>${statusChip(o.status)}</td>
+        </tr>`).join('')}</tbody>
+      </table></div></div>`
+  }`;
+}
+
+// ════════════════════════════════════════════════
+//  PRODUCTS
+// ════════════════════════════════════════════════
+function getProductPrice(p) {
+  return p.price || p.base || (p.sizes && (p.sizes.Small || p.sizes.Standard)) || 0;
 }
 
 function renderProducts() {
   if (PRODUCTS.length === 0) {
     return `
-    <div class="empty-state" style="margin-top:4rem;">
-      <div class="ei">🌸</div>
-      <h3>Your Catalogue is Empty</h3>
-      <p>Start adding your beautiful knitted creations here.</p>
-      <button class="btn btn-rose" onclick="openModal(null)">+ Add First Bouquet</button>
+    <div class="sec-header">
+      <div><div class="sec-title">0 Bouquets</div><div class="sec-sub">Add your first knitted bouquet</div></div>
+      <button class="btn btn-rose btn-sm" onclick="openModal(null)">+ Add Bouquet</button>
+    </div>
+    <div class="empty-state">
+      <div class="ei">🧶</div>
+      <h3>No bouquets yet</h3>
+      <p>Add your first knitted bouquet to start selling.</p>
+      <button class="btn btn-rose" style="margin-top:1rem;" onclick="openModal(null)">+ Add First Bouquet</button>
     </div>`;
   }
 
   return `
   <div class="sec-header" style="margin-bottom:1.25rem;">
-    <div><div class="sec-title">${PRODUCTS.length} Bouquets</div><div class="sec-sub">Click Edit to change price, stock, image, or any detail</div></div>
+    <div>
+      <div class="sec-title">${PRODUCTS.length} Bouquet${PRODUCTS.length!==1?'s':''}</div>
+      <div class="sec-sub">Click Edit to update price, stock, or image</div>
+    </div>
+    <button class="btn btn-rose btn-sm" onclick="openModal(null)">+ Add Bouquet</button>
   </div>
   <div class="tbl-wrap"><div class="tbl-scroll">
     <table>
-      <thead><tr><th>Bouquet</th><th>Category</th><th>Stock</th><th>Price</th><th>Badge</th><th>Actions</th></tr></thead>
+      <thead>
+        <tr>
+          <th>Bouquet</th>
+          <th>Category</th>
+          <th>Stock</th>
+          <th>Price</th>
+          <th>Badge</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
       <tbody>
         ${PRODUCTS.map(p => {
           const stock = Number(p.stock);
-          const stockEl = stock <= 0 ? `<span class="chip chip-red">Out of Stock</span>` : stock <= 5 ? `<span class="chip chip-amber">⚠ ${stock} left</span>` : `<span style="color:var(--green);font-weight:600;">✓ ${stock}</span>`;
-          const thumb = p.imageUrl ? `<img src="${p.imageUrl}" onerror="this.parentElement.innerHTML='${p.emoji}'" style="width:100%;height:100%;object-fit:cover;">` : p.emoji;
+          const price = getProductPrice(p);
+          const stockEl = stock <= 0
+            ? `<span class="chip chip-red">Out of Stock</span>`
+            : stock <= 5
+            ? `<span class="chip chip-amber">⚠ ${stock} left</span>`
+            : `<span style="color:var(--green);font-weight:600;">✓ ${stock}</span>`;
+          const thumb = p.imageUrl
+            ? `<img src="${p.imageUrl}" onerror="this.parentElement.innerHTML='${p.emoji}'" style="width:100%;height:100%;object-fit:cover;">`
+            : p.emoji;
           return `<tr>
             <td>
               <div class="p-name-cell">
                 <div class="p-thumb">${thumb}</div>
-                <div><div class="p-name">${p.name}</div><div class="p-cat">${p.cat}</div></div>
+                <div>
+                  <div class="p-name">${p.name}</div>
+                  <div class="p-cat">${p.cat}</div>
+                </div>
               </div>
             </td>
             <td style="text-transform:capitalize;color:var(--text-dim);font-size:0.8rem;">${p.cat}</td>
             <td>${stockEl}</td>
-            <td style="font-weight:600;color:var(--rose);">Rs. ${(p.price || p.base || 0).toLocaleString()}</td>
+            <td style="font-weight:600;">Rs. ${price.toLocaleString()}</td>
             <td>${p.badge ? `<span class="chip chip-rose">${p.badge}</span>` : '<span style="color:var(--text-faint);">—</span>'}</td>
             <td>
               <div style="display:flex;gap:0.4rem;">
@@ -464,20 +519,29 @@ function renderProducts() {
   </div></div>`;
 }
 
+// ════════════════════════════════════════════════
+//  ORDERS
+// ════════════════════════════════════════════════
 function renderOrders() {
   if (!orders.length) return `<div class="empty-state"><div class="ei">📦</div><h3>No orders yet</h3><p>Orders placed on the store will appear here.</p></div>`;
   return `
   <div class="tbl-wrap"><div class="tbl-scroll">
     <table>
-      <thead><tr><th>Order ID</th><th>Customer</th><th>Phone</th><th>Items</th><th>Delivery Date</th><th>Total</th><th>Status</th><th>Update</th></tr></thead>
+      <thead>
+        <tr>
+          <th>Order ID</th><th>Customer</th><th>Phone</th><th>Items</th>
+          <th>Delivery Date</th><th>Total</th><th>Payment</th><th>Status</th><th>Update</th>
+        </tr>
+      </thead>
       <tbody>
         ${orders.map(o=>`<tr>
           <td><code style="font-size:0.75rem;color:var(--rose);">${o.id}</code></td>
-          <td><div style="font-weight:600;">${o.name}</div><div style="font-size:0.72rem;color:var(--text-dim);max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${o.addr}</div></td>
+          <td><div style="font-weight:600;">${o.name}</div><div style="font-size:0.72rem;color:var(--text-dim);max-width:140px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${o.addr}</div></td>
           <td><a href="tel:${o.phone}" style="color:var(--rose);text-decoration:none;font-weight:600;">${o.phone}</a></td>
           <td style="color:var(--text-dim);font-size:0.8rem;">${o.items?o.items.length:1} item(s)</td>
           <td style="font-weight:500;">${o.date}</td>
           <td style="font-weight:700;color:var(--rose);">Rs. ${o.total.toLocaleString()}</td>
+          <td><span class="chip ${o.pay==='esewa'?'chip-green':'chip-gray'}">${o.pay==='esewa'?'eSewa':'COD'}</span></td>
           <td>${statusChip(o.status)}</td>
           <td>
             <select class="status-select" onchange="updateStatus('${o.id}',this.value)">
@@ -492,37 +556,10 @@ function renderOrders() {
   </div></div>`;
 }
 
-function renderSettings() {
-  return `
-  <div class="sec-header">
-    <div><div class="sec-title">Store Settings</div><div class="sec-sub">Update payment & delivery info shown to customers.</div></div>
-  </div>
-  <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:1.5rem;max-width:480px;">
-    <div class="fg">
-      <label>eSewa Phone Number</label>
-      <input class="fi" id="sEsewa" type="text" placeholder="e.g. 9812345678" value="${SETTINGS.esewaNumber}">
-      <small>Customers will see this number to transfer money via eSewa during checkout.</small>
-    </div>
-    <div class="fg">
-      <label>Standard Delivery Fee (Rs.)</label>
-      <input class="fi" id="sDelFee" type="number" min="0" placeholder="100" value="${SETTINGS.deliveryFee}">
-      <small>Added to the cart total during checkout.</small>
-    </div>
-    <button class="btn btn-rose" style="margin-top:0.5rem;" onclick="saveStoreSettings()">Save Settings ✓</button>
-  </div>`;
-}
-
-function saveStoreSettings() {
-  SETTINGS.esewaNumber = document.getElementById('sEsewa').value.trim();
-  SETTINGS.deliveryFee = parseInt(document.getElementById('sDelFee').value) || 0;
-  saveAllData();
-  toast('Settings saved successfully');
-}
-
 function statusChip(s) {
-  if (s==='Processing')      return `<span class="chip chip-amber">⏳ Processing</span>`;
+  if (s==='Processing')       return `<span class="chip chip-amber">⏳ Processing</span>`;
   if (s==='Out for Delivery') return `<span class="chip chip-blue">🛵 Out for Delivery</span>`;
-  if (s==='Delivered')       return `<span class="chip chip-green">✅ Delivered</span>`;
+  if (s==='Delivered')        return `<span class="chip chip-green">✅ Delivered</span>`;
   return `<span class="chip chip-gray">${s}</span>`;
 }
 
@@ -531,10 +568,74 @@ function updateStatus(id, status) {
   if (o) { o.status=status; saveOrders(); toast(`Order ${id} → ${status}`); }
 }
 
+// ════════════════════════════════════════════════
+//  SETTINGS
+// ════════════════════════════════════════════════
+function renderSettings() {
+  const s = loadSettings();
+  return `
+  <div class="settings-section">
+    <div class="settings-title">💚 eSewa Payment Settings</div>
+    <div class="fg">
+      <label>eSewa Phone Number</label>
+      <input class="fi fi-sm" id="sEsewaPhone" type="tel" placeholder="9706348791" value="${s.esewaPhone||''}">
+      <small>Customers will scan a QR code or enter this number to pay via eSewa. Leave blank to hide eSewa option in checkout.</small>
+    </div>
+  </div>
+
+  <div class="settings-section">
+    <div class="settings-title">🛵 Delivery Settings</div>
+    <div class="form-row">
+      <div class="fg">
+        <label>Delivery Fee (Rs.)</label>
+        <input class="fi" id="sDeliveryFee" type="number" min="0" placeholder="100" value="${s.deliveryFee??100}">
+        <small>Charged per order below the free delivery threshold.</small>
+      </div>
+      <div class="fg">
+        <label>Free Delivery Threshold (Rs.)</label>
+        <input class="fi" id="sFreeAt" type="number" min="0" placeholder="1500" value="${s.freeDeliveryAt??1500}">
+        <small>Orders above this amount get free delivery. Set 0 to always charge.</small>
+      </div>
+    </div>
+  </div>
+
+  <div style="display:flex;align-items:center;gap:0.75rem;">
+    <button class="btn btn-rose" onclick="saveSettings()">Save Settings ✓</button>
+    <span style="font-size:0.75rem;color:var(--text-dim);">Settings are saved locally and synced to the store automatically.</span>
+  </div>
+
+  <div class="settings-section" style="margin-top:1.5rem;">
+    <div class="settings-title">🔐 Admin Password</div>
+    <div class="fg">
+      <label>Current Password</label>
+      <input class="fi fi-sm" type="password" id="oldPass" placeholder="Current password">
+    </div>
+    <div class="fg">
+      <label>New Password</label>
+      <input class="fi fi-sm" type="password" id="newPass" placeholder="New password">
+    </div>
+    <button class="btn btn-ghost" onclick="changePassword()">Change Password</button>
+    <small style="display:block;margin-top:0.5rem;color:var(--amber);">⚠️ Changing password only works for this session. To make it permanent, edit ADMIN_PASS_PLAIN in admin.html.</small>
+  </div>`;
+}
+
+function changePassword() {
+  const old = document.getElementById('oldPass').value;
+  const nw  = document.getElementById('newPass').value;
+  if (old !== ADMIN_PASS_PLAIN) { toast('Current password is wrong', true); return; }
+  if (!nw) { toast('New password cannot be empty', true); return; }
+  toast('Password changed for this session. Edit admin.html to make it permanent.');
+}
+
+// ════════════════════════════════════════════════
+//  PRODUCT MODAL
+// ════════════════════════════════════════════════
 function openModal(id) {
   editingId = id;
   const p = id ? PRODUCTS.find(x=>x.id===id) : null;
   const v = (f, fallback='') => p ? (p[f] ?? fallback) : fallback;
+  // Get price from any of the old or new formats
+  const currentPrice = p ? (p.price || p.base || (p.sizes && (p.sizes.Small || p.sizes.Standard)) || '') : '';
 
   const el = document.createElement('div');
   el.className = 'overlay';
@@ -543,12 +644,14 @@ function openModal(id) {
   <div class="modal">
     <div class="modal-hd">
       <div>
-        <div class="modal-ttl">${p ? '✏️ Edit Bouquet' : '🌸 Add New Bouquet'}</div>
+        <div class="modal-ttl">${p ? '✏️ Edit Bouquet' : '🧶 Add New Bouquet'}</div>
         <div class="modal-sub">${p ? `Editing: ${p.name}` : 'Fill in the details below'}</div>
       </div>
       <button class="modal-x" onclick="closeModal()">✕</button>
     </div>
     <div class="modal-body">
+
+      <!-- IMAGE -->
       <div class="fg">
         <label>Bouquet Image</label>
         <div class="img-preview-row">
@@ -567,11 +670,19 @@ function openModal(id) {
         <small id="uploadStatus" style="color:var(--green);display:none;">✓ Image uploaded</small>
       </div>
 
+      <!-- NAME + EMOJI -->
       <div class="form-row">
-        <div class="fg"><label>Bouquet Name *</label><input class="fi" id="fName" type="text" placeholder="e.g. Pink Dream" value="${v('name')}"></div>
-        <div class="fg"><label>Emoji / Icon</label><input class="fi" id="fEmoji" type="text" placeholder="🌸" value="${v('emoji','🌸')}" oninput="updateEmojiBox(this.value)"></div>
+        <div class="fg">
+          <label>Bouquet Name *</label>
+          <input class="fi" id="fName" type="text" placeholder="e.g. Pastel Dream" value="${v('name')}">
+        </div>
+        <div class="fg">
+          <label>Emoji / Icon</label>
+          <input class="fi" id="fEmoji" type="text" placeholder="🌸" value="${v('emoji','🌸')}" oninput="updateEmojiBox(this.value)">
+        </div>
       </div>
 
+      <!-- CATEGORY + BADGE -->
       <div class="form-row">
         <div class="fg">
           <label>Category *</label>
@@ -579,17 +690,30 @@ function openModal(id) {
             ${['anniversary','birthday','wedding','sympathy','custom'].map(c=>`<option value="${c}" ${v('cat')===c?'selected':''}>${c.charAt(0).toUpperCase()+c.slice(1)}</option>`).join('')}
           </select>
         </div>
-        <div class="fg"><label>Badge Label <span style="font-weight:400;text-transform:none;font-size:0.68rem;">(optional)</span></label><input class="fi" id="fBadge" type="text" placeholder="Bestseller / New" value="${v('badge','')}"></div>
+        <div class="fg">
+          <label>Badge <span style="font-weight:400;text-transform:none;font-size:0.68rem;">(optional)</span></label>
+          <input class="fi" id="fBadge" type="text" placeholder="Bestseller / New / Limited" value="${v('badge','')}">
+        </div>
       </div>
 
+      <!-- STOCK + PRICE -->
       <div class="form-row">
-        <div class="fg"><label>Stock Quantity *</label><input class="fi" id="fStock" type="number" min="0" placeholder="20" value="${v('stock',20)}"><small>Set to 0 → "Out of Stock"</small></div>
-        <div class="fg"><label>Price (Rs.) *</label><input class="fi" id="fPrice" type="number" min="0" placeholder="850" value="${v('price', v('base', ''))}"></div>
+        <div class="fg">
+          <label>Stock Quantity *</label>
+          <input class="fi" id="fStock" type="number" min="0" placeholder="10" value="${v('stock',10)}">
+          <small>0 = "Out of Stock" badge shown. ≤5 = Low stock warning.</small>
+        </div>
+        <div class="fg">
+          <label>Price (Rs.) *</label>
+          <input class="fi" id="fPrice" type="number" min="0" placeholder="850" value="${currentPrice}">
+          <small>Single price for this bouquet.</small>
+        </div>
       </div>
 
+      <!-- DESCRIPTION -->
       <div class="fg">
         <label>Description</label>
-        <textarea class="fi" id="fDesc" placeholder="Describe this knitted creation...">${v('desc')}</textarea>
+        <textarea class="fi" id="fDesc" placeholder="Describe this knitted bouquet...">${v('desc')}</textarea>
       </div>
     </div>
     <div class="modal-ft">
@@ -610,19 +734,25 @@ function closeModal() {
 function previewImg(url) {
   const box = document.getElementById('imgBox');
   if (!box) return;
-  if (url) box.innerHTML = `<img src="${url}" style="width:100%;height:100%;object-fit:cover;" onerror="this.parentElement.innerHTML='<span style=font-size:2rem;>❌</span>'">`;
-  else { const emoji = (document.getElementById('fEmoji')||{}).value || '🌸'; box.innerHTML = `<span style="font-size:2rem;">${emoji}</span>`; }
+  if (url) {
+    box.innerHTML = `<img src="${url}" style="width:100%;height:100%;object-fit:cover;" onerror="this.parentElement.innerHTML='<span style=font-size:2rem>❌</span>'">`;
+  } else {
+    const emoji = (document.getElementById('fEmoji')||{}).value || '🌸';
+    box.innerHTML = `<span style="font-size:2rem;">${emoji}</span>`;
+  }
 }
 
 function updateEmojiBox(emoji) {
   const url = (document.getElementById('fImageUrl')||{}).value;
-  if (!url) { const box = document.getElementById('imgBox'); if (box) box.innerHTML = `<span style="font-size:2rem;">${emoji}</span>`; }
+  if (!url) {
+    const box = document.getElementById('imgBox');
+    if (box) box.innerHTML = `<span style="font-size:2rem;">${emoji}</span>`;
+  }
 }
 
 async function handleImageUpload(input) {
   const file = input.files[0];
   if (!file) return;
-
   const reader = new FileReader();
   reader.onload = e => {
     const box = document.getElementById('imgBox');
@@ -630,9 +760,7 @@ async function handleImageUpload(input) {
   };
   reader.readAsDataURL(file);
 
-  const status = document.getElementById('uploadStatus');
   toast('Uploading image…');
-
   try {
     const base64 = await new Promise((res, rej) => {
       const r = new FileReader();
@@ -640,46 +768,53 @@ async function handleImageUpload(input) {
       r.onerror = rej;
       r.readAsDataURL(file);
     });
-
     const filename = `${Date.now()}_${file.name.replace(/[^a-zA-Z0-9._-]/g,'_')}`;
-    const resp = await fetch(WORKER_UPLOAD, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ password: WORKER_PASSWORD, filename, imageBase64: base64 }), });
+    const resp = await fetch(WORKER_UPLOAD, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ password: WORKER_PASSWORD, filename, imageBase64: base64 }),
+    });
     const result = await resp.json();
     if (result.ok) {
       document.getElementById('fImageUrl').value = result.url;
+      const status = document.getElementById('uploadStatus');
       if (status) status.style.display = 'block';
       toast('Image uploaded ✓');
-    } else toast(`Upload failed: ${result.error}`, true);
+    } else {
+      toast(`Upload failed: ${result.error}`, true);
+    }
   } catch(e) {
-    toast('Upload failed — try a URL instead', true);
+    toast('Upload failed — try pasting a URL instead', true);
   }
 }
 
 function saveProduct() {
-  const name    = document.getElementById('fName').value.trim();
-  const emoji   = document.getElementById('fEmoji').value.trim() || '🌸';
-  const cat     = document.getElementById('fCat').value;
-  const badge   = document.getElementById('fBadge').value.trim() || null;
-  const stock   = parseInt(document.getElementById('fStock').value) || 0;
-  const price   = parseInt(document.getElementById('fPrice').value);
-  const desc    = document.getElementById('fDesc').value.trim();
+  const name     = document.getElementById('fName').value.trim();
+  const emoji    = document.getElementById('fEmoji').value.trim() || '🌸';
+  const cat      = document.getElementById('fCat').value;
+  const badge    = document.getElementById('fBadge').value.trim() || null;
+  const stock    = parseInt(document.getElementById('fStock').value) || 0;
+  const price    = parseInt(document.getElementById('fPrice').value);
+  const desc     = document.getElementById('fDesc').value.trim();
   const imageUrl = document.getElementById('fImageUrl').value.trim();
 
-  if (!name) { toast('Bouquet name is required', true); return; }
-  if (isNaN(price)) { toast('Price is required', true); return; }
-
-  const newProd = { id: editingId || Date.now(), name, emoji, cat, badge, stock, desc, imageUrl, price, base: price };
+  if (!name)          { toast('Bouquet name is required', true); return; }
+  // Fixed: use isNaN so price 0 (free item) is valid
+  if (isNaN(price) || price < 0) { toast('A valid price is required (use 0 for free)', true); return; }
 
   if (editingId) {
     const idx = PRODUCTS.findIndex(p=>p.id===editingId);
-    if (idx !== -1) PRODUCTS[idx] = newProd;
+    if (idx===-1) return;
+    PRODUCTS[idx] = { ...PRODUCTS[idx], name, emoji, cat, badge, stock, desc, imageUrl, price };
     toast(`"${name}" updated ✓`);
   } else {
-    PRODUCTS.push(newProd);
-    toast(`"${name}" added to catalogue ✓`);
+    const newId = PRODUCTS.length > 0 ? Math.max(...PRODUCTS.map(p=>p.id)) + 1 : 1;
+    PRODUCTS.push({ id: newId, name, emoji, cat, badge, stock, desc, imageUrl, price });
+    toast(`"${name}" added ✓`);
   }
-  saveAllData();
+  saveProducts();
   closeModal();
-  showSection('products', false);
+  showSection('products');
 }
 
 function deleteProduct(id) {
@@ -687,11 +822,12 @@ function deleteProduct(id) {
   if (!p) return;
   if (!confirm(`Delete "${p.name}"?\nThis cannot be undone.`)) return;
   PRODUCTS = PRODUCTS.filter(x=>x.id!==id);
-  saveAllData();
+  saveProducts();
   toast(`"${p.name}" deleted`);
-  showSection('products', false);
+  showSection('products');
 }
 
+// ── TOAST ──────────────────────────────────
 let toastTimer;
 function toast(msg, isErr=false) {
   const el = document.getElementById('toastEl');
@@ -699,7 +835,7 @@ function toast(msg, isErr=false) {
   el.className = isErr ? 'err' : '';
   el.style.display = 'block';
   clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => { el.style.display='none'; }, 2600);
+  toastTimer = setTimeout(() => { el.style.display='none'; }, 2800);
 }
 </script>
 </body>
