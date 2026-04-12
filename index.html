@@ -359,6 +359,7 @@ function saveOrders()   { localStorage.setItem('daisy_orders',   JSON.stringify(
 
 // ── LOGIN ────────────────────────────────────
 async function doLogin() {
+  const u = document.getElementById('lu').value.trim();
   const p = document.getElementById('lp').value;
   const h = await hashStr(p);
   const ok = (u === ADMIN_USER) && (p === ADMIN_PASS_PLAIN || h === PASS_HASH);
