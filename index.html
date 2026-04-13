@@ -746,8 +746,9 @@ function closeConfirm() {
 }
 
 function confirmOk() {
+  const cb = _confirmCallback; // save BEFORE closeConfirm() nulls it
   closeConfirm();
-  if (_confirmCallback) _confirmCallback();
+  if (cb) cb();
 }
 
 // Close on backdrop click
