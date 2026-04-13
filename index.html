@@ -156,6 +156,24 @@
     .settings-section { background: var(--card); border: 1px solid var(--border); border-radius: var(--r); padding: 1.5rem; margin-bottom: 1.25rem; }
     .settings-title { font-size: 0.88rem; font-weight: 700; color: var(--text); margin-bottom: 1rem; padding-bottom: 0.75rem; border-bottom: 1px solid var(--border); }
 
+    /* CONFIRM DIALOG */
+    #confirmDialog {
+      display: none; position: fixed; inset: 0; z-index: 9000;
+      background: rgba(0,0,0,0.7); backdrop-filter: blur(4px);
+      align-items: center; justify-content: center; padding: 1rem;
+    }
+    #confirmDialog.open { display: flex; }
+    .confirm-box {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 18px; padding: 2rem; max-width: 360px; width: 100%;
+      text-align: center; animation: fadeUp 0.2s ease both;
+      box-shadow: 0 24px 64px rgba(0,0,0,0.5);
+    }
+    .confirm-box .icon { font-size: 2.5rem; margin-bottom: 0.75rem; }
+    .confirm-box h3 { font-size: 1rem; font-weight: 700; color: var(--text); margin-bottom: 0.4rem; }
+    .confirm-box p  { font-size: 0.82rem; color: var(--text-dim); margin-bottom: 1.5rem; line-height: 1.55; }
+    .confirm-actions { display: flex; gap: 0.65rem; justify-content: center; }
+
     /* TOAST */
     #toastEl { position: fixed; bottom: 1.5rem; left: 50%; transform: translateX(-50%); background: var(--green); color: #fff; padding: 0.65rem 1.4rem; border-radius: 50px; font-size: 0.84rem; font-weight: 600; z-index: 9999; display: none; animation: fadeUp 0.3s ease; white-space: nowrap; box-shadow: 0 4px 20px rgba(62,207,142,0.3); }
     #toastEl.err { background: var(--red); box-shadow: 0 4px 20px rgba(239,68,68,0.3); }
@@ -300,6 +318,19 @@
 
 <!-- Mobile floating add button (products only) -->
 <button id="mobileAddBtn" onclick="openModal(null)" title="Add Bouquet">＋</button>
+
+<!-- CONFIRMATION DIALOG -->
+<div id="confirmDialog">
+  <div class="confirm-box">
+    <div class="icon" id="cdIcon">⚠️</div>
+    <h3 id="cdTitle">Are you sure?</h3>
+    <p id="cdMsg">This action cannot be undone.</p>
+    <div class="confirm-actions">
+      <button class="btn btn-ghost" onclick="closeConfirm()">Cancel</button>
+      <button class="btn btn-danger" id="cdOkBtn" onclick="confirmOk()">Confirm</button>
+    </div>
+  </div>
+</div>
 
 <!-- TOAST -->
 <div id="toastEl"></div>
@@ -616,34 +647,65 @@ function renderProducts() {
 //  ORDERS
 // ════════════════════════════════════════════════
 function renderOrders() {
-  if (!orders.length) return `<div class="empty-state"><div class="ei">📦</div><h3>No orders yet</h3><p>Orders placed on the store will appear here.</p></div>`;
+  if (!orders.length) return `
+    <div class="empty-state">
+      <div class="ei">📦</div>
+      <h3>No orders yet</h3>
+      <p>Orders placed on the store will appear here.</p>
+    </div>`;
+
+  const active    = orders.filter(o=>o.status!=='Cancelled');
+  const cancelled = orders.filter(o=>o.status==='Cancelled');
+
   return `
+  <div class="sec-header" style="margin-bottom:1.25rem;">
+    <div>
+      <div class="sec-title">${orders.length} Order${orders.length!==1?'s':''}</div>
+      <div class="sec-sub">${active.length} active · ${cancelled.length} cancelled</div>
+    </div>
+    <button class="btn btn-danger btn-sm" onclick="askClearOrders()">🗑 Clear All</button>
+  </div>
   <div class="tbl-wrap"><div class="tbl-scroll">
     <table>
       <thead>
         <tr>
           <th>Order ID</th><th>Customer</th><th>Phone</th><th>Items</th>
-          <th>Delivery Date</th><th>Total</th><th>Payment</th><th>Status</th><th>Update</th>
+          <th>Date</th><th>Total</th><th>Payment</th><th>Status</th><th>Update</th><th>Action</th>
         </tr>
       </thead>
       <tbody>
-        ${orders.map(o=>`<tr>
-          <td><code style="font-size:0.75rem;color:var(--rose);">${o.id}</code></td>
-          <td><div style="font-weight:600;">${o.name}</div><div style="font-size:0.72rem;color:var(--text-dim);max-width:140px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${o.addr}</div></td>
-          <td><a href="tel:${o.phone}" style="color:var(--rose);text-decoration:none;font-weight:600;">${o.phone}</a></td>
-          <td style="color:var(--text-dim);font-size:0.8rem;">${o.items?o.items.length:1} item(s)</td>
-          <td style="font-weight:500;">${o.date}</td>
-          <td style="font-weight:700;color:var(--rose);">Rs. ${o.total.toLocaleString()}</td>
-          <td><span class="chip ${o.pay==='esewa'?'chip-green':'chip-gray'}">${o.pay==='esewa'?'eSewa':'COD'}</span></td>
-          <td>${statusChip(o.status)}</td>
-          <td>
-            <select class="status-select" onchange="updateStatus('${o.id}',this.value)">
-              <option ${o.status==='Processing'?'selected':''}>Processing</option>
-              <option ${o.status==='Out for Delivery'?'selected':''}>Out for Delivery</option>
-              <option ${o.status==='Delivered'?'selected':''}>Delivered</option>
-            </select>
-          </td>
-        </tr>`).join('')}
+        ${orders.map(o=>{
+          const isCancelled = o.status === 'Cancelled';
+          return `<tr style="${isCancelled?'opacity:0.5;':''}">
+            <td><code style="font-size:0.75rem;color:var(--rose);">${o.id}</code></td>
+            <td>
+              <div style="font-weight:600;">${o.name}</div>
+              <div style="font-size:0.72rem;color:var(--text-dim);max-width:130px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${o.addr}</div>
+            </td>
+            <td><a href="tel:${o.phone}" style="color:var(--rose);text-decoration:none;font-weight:600;">${o.phone}</a></td>
+            <td style="color:var(--text-dim);font-size:0.8rem;">${o.items?o.items.length:1} item(s)</td>
+            <td style="font-weight:500;white-space:nowrap;">${o.date}</td>
+            <td style="font-weight:700;color:var(--rose);">Rs. ${o.total.toLocaleString()}</td>
+            <td><span class="chip ${o.pay==='esewa'?'chip-green':'chip-gray'}">${o.pay==='esewa'?'eSewa':'COD'}</span></td>
+            <td>${statusChip(o.status)}</td>
+            <td>
+              ${isCancelled
+                ? `<span style="font-size:0.75rem;color:var(--text-faint);">—</span>`
+                : `<select class="status-select" onchange="updateStatus('${o.id}',this.value)">
+                    <option ${o.status==='Processing'?'selected':''}>Processing</option>
+                    <option ${o.status==='Out for Delivery'?'selected':''}>Out for Delivery</option>
+                    <option ${o.status==='Delivered'?'selected':''}>Delivered</option>
+                  </select>`
+              }
+            </td>
+            <td>
+              ${isCancelled
+                ? `<button class="btn btn-ghost btn-sm" onclick="askDeleteOrder('${o.id}')">🗑 Remove</button>`
+                : `<button class="btn btn-danger btn-sm" onclick="askCancelOrder('${o.id}')">✕ Cancel</button>`
+              }
+            </td>
+          </tr>`;
+        }).join('')}
       </tbody>
     </table>
   </div></div>`;
@@ -653,12 +715,103 @@ function statusChip(s) {
   if (s==='Processing')       return `<span class="chip chip-amber">⏳ Processing</span>`;
   if (s==='Out for Delivery') return `<span class="chip chip-blue">🛵 Out for Delivery</span>`;
   if (s==='Delivered')        return `<span class="chip chip-green">✅ Delivered</span>`;
+  if (s==='Cancelled')        return `<span class="chip chip-red">✕ Cancelled</span>`;
   return `<span class="chip chip-gray">${s}</span>`;
 }
 
 function updateStatus(id, status) {
   const o = orders.find(x=>x.id===id);
   if (o) { o.status=status; saveOrders(); toast(`Order ${id} → ${status}`); }
+}
+
+// ════════════════════════════════════════════════
+//  CONFIRM DIALOG
+// ════════════════════════════════════════════════
+let _confirmCallback = null;
+
+function showConfirm(icon, title, msg, okLabel, okClass, cb) {
+  document.getElementById('cdIcon').textContent   = icon;
+  document.getElementById('cdTitle').textContent  = title;
+  document.getElementById('cdMsg').textContent    = msg;
+  const okBtn = document.getElementById('cdOkBtn');
+  okBtn.textContent  = okLabel;
+  okBtn.className    = `btn ${okClass}`;
+  _confirmCallback   = cb;
+  document.getElementById('confirmDialog').classList.add('open');
+}
+
+function closeConfirm() {
+  document.getElementById('confirmDialog').classList.remove('open');
+  _confirmCallback = null;
+}
+
+function confirmOk() {
+  closeConfirm();
+  if (_confirmCallback) _confirmCallback();
+}
+
+// Close on backdrop click
+document.getElementById('confirmDialog').addEventListener('click', e => {
+  if (e.target === document.getElementById('confirmDialog')) closeConfirm();
+});
+
+// ── CANCEL ORDER ─────────────────────────────
+function askCancelOrder(id) {
+  const o = orders.find(x=>x.id===id);
+  if (!o) return;
+  showConfirm(
+    '⚠️',
+    'Cancel this order?',
+    `Order ${id} for ${o.name} (Rs. ${o.total.toLocaleString()}) will be marked as Cancelled. The order record stays visible.`,
+    'Yes, Cancel Order',
+    'btn-danger',
+    () => cancelOrder(id)
+  );
+}
+
+function cancelOrder(id) {
+  const o = orders.find(x=>x.id===id);
+  if (!o) return;
+  o.status = 'Cancelled';
+  saveOrders();
+  toast(`Order ${id} cancelled`);
+  showSection('orders');
+}
+
+// ── DELETE SINGLE CANCELLED ORDER ───────────
+function askDeleteOrder(id) {
+  const o = orders.find(x=>x.id===id);
+  if (!o) return;
+  showConfirm(
+    '🗑',
+    'Remove this order?',
+    `Order ${id} (${o.name}) will be permanently deleted from the list.`,
+    'Delete',
+    'btn-danger',
+    () => {
+      orders = orders.filter(x=>x.id!==id);
+      saveOrders();
+      toast('Order removed');
+      showSection('orders');
+    }
+  );
+}
+
+// ── CLEAR ALL ORDERS ─────────────────────────
+function askClearOrders() {
+  showConfirm(
+    '🗑',
+    'Clear ALL orders?',
+    `This will permanently delete all ${orders.length} order${orders.length!==1?'s':''} from the list. This cannot be undone.`,
+    'Yes, Clear Everything',
+    'btn-danger',
+    () => {
+      orders = [];
+      saveOrders();
+      toast('All orders cleared');
+      showSection('orders');
+    }
+  );
 }
 
 // ════════════════════════════════════════════════
