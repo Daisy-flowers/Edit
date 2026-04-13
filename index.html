@@ -410,9 +410,40 @@ async function saveSettings() {
   const esewaPhone    = document.getElementById('sEsewaPhone').value.trim();
   const deliveryFee   = parseInt(document.getElementById('sDeliveryFee').value) || 100;
   const freeDeliveryAt= parseInt(document.getElementById('sFreeAt').value)      || 1500;
-  const settings = { esewaPhone, deliveryFee, freeDeliveryAt };
+  // Preserve existing QR image — it's only updated via handleQrUpload()
+  const existing = loadSettings();
+  const settings = { esewaPhone, deliveryFee, freeDeliveryAt, esewaQrImage: existing.esewaQrImage || '' };
   localStorage.setItem('daisy_settings', JSON.stringify(settings));
   toast('Settings saved ✓');
+}
+
+function handleQrUpload(input) {
+  const file = input.files[0];
+  if (!file) return;
+  if (!file.type.startsWith('image/')) { toast('Please select an image file', true); return; }
+  const reader = new FileReader();
+  reader.onload = e => {
+    const base64 = e.target.result; // full data URL
+    const preview = document.getElementById('qrPreview');
+    if (preview) {
+      preview.innerHTML = `<img src="${base64}" style="width:100%;height:100%;object-fit:contain;border-radius:8px;">`;
+    }
+    // Save immediately into settings
+    const existing = loadSettings();
+    existing.esewaQrImage = base64;
+    localStorage.setItem('daisy_settings', JSON.stringify(existing));
+    toast('eSewa QR uploaded ✓ — save settings to confirm');
+  };
+  reader.readAsDataURL(file);
+}
+
+function removeQr() {
+  const existing = loadSettings();
+  existing.esewaQrImage = '';
+  localStorage.setItem('daisy_settings', JSON.stringify(existing));
+  const preview = document.getElementById('qrPreview');
+  if (preview) preview.innerHTML = `<span style="font-size:1.5rem;color:var(--text-faint);">📷</span>`;
+  toast('QR image removed');
 }
 
 // ── SIDEBAR DRAWER (mobile) ──────────────────
@@ -820,13 +851,33 @@ function askClearOrders() {
 // ════════════════════════════════════════════════
 function renderSettings() {
   const s = loadSettings();
+  const hasQr = !!s.esewaQrImage;
   return `
   <div class="settings-section">
     <div class="settings-title">💚 eSewa Payment Settings</div>
     <div class="fg">
       <label>eSewa Phone Number</label>
       <input class="fi fi-sm" id="sEsewaPhone" type="tel" placeholder="9706348791" value="${s.esewaPhone||''}">
-      <small>Customers will scan a QR code or enter this number to pay via eSewa. Leave blank to hide eSewa option in checkout.</small>
+      <small>Displayed alongside the QR so customers can manually enter it. Leave blank to hide eSewa option entirely.</small>
+    </div>
+
+    <div class="fg" style="margin-top:0.75rem;">
+      <label>eSewa QR Code Image <span style="font-weight:400;text-transform:none;font-size:0.68rem;">(screenshot from your eSewa app)</span></label>
+      <div style="display:flex;align-items:flex-start;gap:1rem;margin-bottom:0.6rem;">
+        <div id="qrPreview" style="width:90px;height:90px;border-radius:12px;background:rgba(255,255,255,0.05);border:2px dashed var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden;">
+          ${hasQr
+            ? `<img src="${s.esewaQrImage}" style="width:100%;height:100%;object-fit:contain;border-radius:8px;">`
+            : `<span style="font-size:1.5rem;color:var(--text-faint);">📷</span>`}
+        </div>
+        <div style="display:flex;flex-direction:column;gap:0.5rem;">
+          <label style="display:inline-flex;align-items:center;gap:0.4rem;background:var(--green-dim);color:var(--green);border:none;padding:0.45rem 0.9rem;border-radius:6px;font-size:0.78rem;font-weight:600;cursor:pointer;">
+            📷 Upload QR Screenshot
+            <input type="file" accept="image/*" style="display:none;" onchange="handleQrUpload(this)">
+          </label>
+          ${hasQr ? `<button class="btn btn-danger btn-sm" onclick="removeQr()">🗑 Remove QR</button>` : ''}
+          <small style="color:var(--text-faint);">Open eSewa app → Receive Money → Screenshot the QR → Upload here</small>
+        </div>
+      </div>
     </div>
   </div>
 
